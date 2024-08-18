@@ -14,7 +14,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     // playwright (emulate browser + scrape)
-    implementation("com.microsoft.playwright:playwright:1.39.0");
+    implementation("com.microsoft.playwright:playwright:1.46.0");
 
 }
 
