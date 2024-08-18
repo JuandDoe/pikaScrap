@@ -4,6 +4,7 @@ import com.microsoft.playwright.*;
 import java.util.Scanner;
 
 import static ape.fr.Filters.putInFiltersHTables;
+import static ape.fr.Filters.useSellerCountryFilter;
 
 public class Main {
 
@@ -23,13 +24,13 @@ public class Main {
 
             String cardCustomLink = input.nextLine().trim();
 
+            String sellerLocationChoseByUser = "?sellerCountry=" + Filters.useSellerCountryFilter();
 
             // Erase ";" caused by Strings concatenation
-            String fullCustomLink = (baseLink + cardCustomLink).replace(";", "");
-
+            String fullCustomLink = (baseLink + cardCustomLink + sellerLocationChoseByUser).replace(";", "");
+            System.out.println(fullCustomLink);
             Page page = browser.newPage();
             page.navigate(fullCustomLink);
-
 
             // Find all elements with "id" attributes
             ElementHandle[] elements = page.querySelectorAll("[id]").toArray(new ElementHandle[0]);
@@ -61,17 +62,13 @@ public class Main {
             String fullId = ("#" + cardId + lowestPriceSelector);
             fullId = fullId.replace(";", "");
 
-
             // display the price found into the scraped selector
-
-
 
             String priceCard = page.locator(fullId).innerText();
 
-            System.out.println(priceCard);
+            System.out.println( "Lowest card price on cardmarket.com is " + priceCard);
         }
 
     }
-
 
 }
