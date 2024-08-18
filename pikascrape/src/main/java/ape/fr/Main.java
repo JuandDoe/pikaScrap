@@ -3,10 +3,11 @@ package ape.fr;
 import com.microsoft.playwright.*;
 import java.util.Scanner;
 
-import static ape.fr.Filters.putInFiltersHTables;
-import static ape.fr.Filters.useSellerCountryFilter;
+import static ape.fr.Filters.*;
 
 public class Main {
+
+    public static String fullCustomLink;
 
     public static void main(String[] args) {
         putInFiltersHTables();
@@ -24,11 +25,19 @@ public class Main {
 
             String cardCustomLink = input.nextLine().trim();
 
-            String sellerLocationChoseByUser = "?sellerCountry=" + Filters.useSellerCountryFilter();
+            String sellerLocationChoseByUser = "?sellerCountry=" + Filters.userSellerCountryFilter();
 
             // Erase ";" caused by Strings concatenation
-            String fullCustomLink = (baseLink + cardCustomLink + sellerLocationChoseByUser).replace(";", "");
-            System.out.println(fullCustomLink);
+            fullCustomLink = (baseLink + cardCustomLink + sellerLocationChoseByUser).replace(";", "");
+
+               String sellerTypeChoseByUser = "&sellerType=" + Filters.userSellerTypesFilter();
+
+             if(stateOfSellerTypesFilter == 1) {
+
+               fullCustomLink = (baseLink + cardCustomLink + sellerLocationChoseByUser + sellerTypeChoseByUser).replace(";", "");
+
+                System.out.println(fullCustomLink);
+            }
             Page page = browser.newPage();
             page.navigate(fullCustomLink);
 
@@ -63,12 +72,9 @@ public class Main {
             fullId = fullId.replace(";", "");
 
             // display the price found into the scraped selector
-
             String priceCard = page.locator(fullId).innerText();
-
+System.out.println(fullCustomLink);
             System.out.println( "Lowest card price on cardmarket.com is " + priceCard);
         }
-
     }
-
 }

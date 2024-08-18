@@ -8,13 +8,17 @@ public class Filters {
     public static HashMap<String, Integer> sellersLocations = new HashMap<String, Integer>();
     public static HashMap<String, Integer> sellersTypes = new HashMap<String, Integer>();
     public static HashMap<String, Integer> cardsLanguages = new HashMap<String, Integer>();
-    public static HashMap<String, Integer> cardMinConditions = new HashMap<String, Integer>();
+    public static HashMap<String, Integer> cardsMinConditions = new HashMap<String, Integer>();
     public static HashMap<String, Boolean> Extra = new HashMap<String, Boolean>();
+
+    public static int stateOfSellerLocationFilter;
+    public static String userChoiceSellerLocations;
+    public static int stateOfSellerTypesFilter;
+    public static String userChoiceSellerTypes;
 
     public static void putInFiltersHTables() {
 
         // Example : ?sellerCountry=15
-
         sellersLocations.put("Austria", 1);
         sellersLocations.put("Belgium", 2);
         sellersLocations.put("Bulgaria", 3);
@@ -52,14 +56,11 @@ public class Filters {
         sellersLocations.put("United Kingdom", 13);
 
         // example : ?sellerType=0
-
         sellersTypes.put("Pivate", 0);
         sellersTypes.put("Professional", 1);
         sellersTypes.put("Powers1ller", 2);
 
-
         // example : ?language=12
-
         cardsLanguages.put("English", 1);
         cardsLanguages.put("French", 2);
         cardsLanguages.put("German", 3);
@@ -77,13 +78,12 @@ public class Filters {
         cardsLanguages.put("Hungarian", 15);
 
         // example : ?minCondition=6
-
-        cardMinConditions.put("Mint", 1);
-        cardMinConditions.put("Near Mint", 2);
-        cardMinConditions.put("Excellent", 3);
-        cardMinConditions.put("Good", 4);
-        cardMinConditions.put("Light Played", 5);
-        cardMinConditions.put("Played", 6);
+        cardsMinConditions.put("Mint", 1);
+        cardsMinConditions.put("Near Mint", 2);
+        cardsMinConditions.put("Excellent", 3);
+        cardsMinConditions.put("Good", 4);
+        cardsMinConditions.put("Light Played", 5);
+        cardsMinConditions.put("Played", 6);
 
         Extra.put("isSignedY", Boolean.TRUE);
         Extra.put("isSignedN", Boolean.FALSE);
@@ -93,12 +93,62 @@ public class Filters {
         Extra.put("isPlaysetN", Boolean.FALSE);
         Extra.put("isAlteredY", Boolean.TRUE);
         Extra.put("isAlteredN", Boolean.FALSE);
-
     }
 
-    public static String useSellerCountryFilter() {
+    public static String userSellerCountryFilter() {
 
-       int stateOfSellerLocationFilter;
+        while (true) {
+            System.out.println("Sort cards sellers by countries ? (1)Yes/(0)No");
+            Scanner input = new Scanner(System.in);
+            if (input.hasNextInt()) {
+                stateOfSellerLocationFilter = input.nextInt();
+                input.nextLine();
+
+                if (stateOfSellerLocationFilter == 1) {
+                    System.out.println(sellersLocations);
+                    System.out.println("Chose seller location : to sort cards from France and Germany, input : 12,7,");
+                    userChoiceSellerLocations = input.nextLine();
+                    return userChoiceSellerLocations;
+
+                } else if (stateOfSellerLocationFilter == 0) {
+                    System.out.println(" WARNING : Seller locations filter is  DESACTIVATE ");
+                    break;
+                } else {
+                    System.out.println("ERROR : Imput 1 for Yes or 0 for No");
+                }
+            }
+        }
+        return "";
+    }
+    public static String userSellerTypesFilter() {
+
+        while (true) {
+            System.out.println("Sort cards sellers by sellers types ? (1)Yes/(0)No");
+            Scanner input = new Scanner(System.in);
+            if (input.hasNextInt()) {
+                stateOfSellerTypesFilter = input.nextInt();
+                input.nextLine();
+
+                if (stateOfSellerTypesFilter == 1) {
+                    System.out.println(sellersTypes);
+                    System.out.println("Chose seller type : to sort cards from professionals and powersellers, input : 1,2,");
+                    userChoiceSellerTypes = input.nextLine();
+                    return userChoiceSellerTypes;
+
+                } else if (stateOfSellerTypesFilter == 0) {
+                    System.out.println(" WARNING : Seller types filter is  DESACTIVATE ");
+                    break;
+                } else {
+                    System.out.println("ERROR : Imput 1 for Yes or 0 for No");
+                }
+            }
+        }
+        return "";
+    }
+
+    public static String userCardLanguageFilter() {
+
+        int stateOfSellerLocationFilter;
         String userChoiceSellerLocations;
 
         while (true) {
@@ -119,12 +169,69 @@ public class Filters {
                     break;
                 } else {
                     System.out.println("ERROR : Imput 1 for Yes or 0 for No");
-
                 }
             }
         }
-
         return "";
     }
-}
+
+    public static String userCardMinConditionsFilter() {
+
+        int stateOfSellerLocationFilter;
+        String userChoiceSellerLocations;
+
+        while (true) {
+            System.out.println("Sort cards sellers by countries ? (1)Yes/(0)No");
+            Scanner input = new Scanner(System.in);
+            if (input.hasNextInt()) {
+                stateOfSellerLocationFilter = input.nextInt();
+                input.nextLine();
+
+                if (stateOfSellerLocationFilter == 1) {
+                    System.out.println(sellersLocations);
+                    System.out.println("Chose seller location : to sort cards from France and Germany, input : 12,7,");
+                    userChoiceSellerLocations = input.nextLine();
+                    return userChoiceSellerLocations;
+
+                } else if (stateOfSellerLocationFilter == 0) {
+                    System.out.println(" WARNING : Seller locations filter is  DESACTIVATE ");
+                    break;
+                } else {
+                    System.out.println("ERROR : Imput 1 for Yes or 0 for No");
+                }
+            }
+        }
+        return "";
+    }
+
+    public static String userExtrasFilter() {
+
+        int stateOfSellerLocationFilter;
+        String userChoiceSellerLocations;
+
+        while (true) {
+            System.out.println("Sort cards sellers by countries ? (1)Yes/(0)No");
+            Scanner input = new Scanner(System.in);
+            if (input.hasNextInt()) {
+                stateOfSellerLocationFilter = input.nextInt();
+                input.nextLine();
+
+                if (stateOfSellerLocationFilter == 1) {
+                    System.out.println(sellersLocations);
+                    System.out.println("Chose seller location : to sort cards from France and Germany, input : 12,7,");
+                    userChoiceSellerLocations = input.nextLine();
+                    return userChoiceSellerLocations;
+
+                } else if (stateOfSellerLocationFilter == 0) {
+                    System.out.println(" WARNING : Seller locations filter is  DESACTIVATE ");
+                    break;
+                } else {
+                    System.out.println("ERROR : Imput 1 for Yes or 0 for No");
+                }
+            }
+        }
+        return "";
+    }
+    }
+
 
