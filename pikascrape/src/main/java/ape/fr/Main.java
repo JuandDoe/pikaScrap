@@ -3,10 +3,12 @@ package ape.fr;
 import com.microsoft.playwright.*;
 import java.util.Scanner;
 
+import static ape.fr.Filters.putInFiltersHTables;
 
 public class Main {
 
     public static void main(String[] args) {
+        putInFiltersHTables();
 
         try (Playwright playwright = Playwright.create()) {
             Browser browser = playwright.firefox().launch();
@@ -61,6 +63,8 @@ public class Main {
 
 
             // display the price found into the scraped selector
+
+
 
             String priceCard = page.locator(fullId).innerText();
 
