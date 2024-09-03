@@ -34,10 +34,21 @@ public class Main {
 
              if(stateOfSellerTypesFilter == 1) {
 
-               fullCustomLink = (baseLink + cardCustomLink + sellerLocationChoseByUser + sellerTypeChoseByUser).replace(";", "");
+               fullCustomLink = (fullCustomLink +sellerTypeChoseByUser).replace(";","");
 
                 System.out.println(fullCustomLink);
             }
+
+             String cardLanguageChoseByUser = "&language=" + Filters.userCardLanguageFilter();
+             if(stateOfCardLanguageFilter == 1) {
+                 fullCustomLink = (fullCustomLink + cardLanguageChoseByUser).replace(";","");
+             }
+
+            String cardMintMinConditionChoseByUser = "&minCondition=" + Filters.userCardMinConditionsFilter();
+             if(stateOfMinimumMintConditionFilter == 1) {
+                 fullCustomLink = (fullCustomLink + cardMintMinConditionChoseByUser).replace(";", "");
+             }
+
             Page page = browser.newPage();
             page.navigate(fullCustomLink);
 
