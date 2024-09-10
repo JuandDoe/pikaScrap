@@ -16,6 +16,11 @@ dependencies {
     // playwright (emulate browser + scrape)
     implementation("com.microsoft.playwright:playwright:1.46.0");
 
+    // database optimisation
+    // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
+    implementation("com.zaxxer:HikariCP:5.1.0")
+
+    implementation("org.postgresql:postgresql:42.7.4") // Adjust the version as needed
 }
 
 tasks.test {
