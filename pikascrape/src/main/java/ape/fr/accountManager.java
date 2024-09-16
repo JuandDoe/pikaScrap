@@ -1,40 +1,81 @@
 package ape.fr;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class accountManager {
 
+    public static HikariDataSource currentDatasource;
+    public static String username;
+    public static String email;
+    public static String telegramId;
+    public static String password;
+    public static int user_id;
+
     static int stateOfaccessToPikaScrape;
 
-    public static void accessToPikaScrape() {
+    public static void test() {
+        HikariConfig config = new HikariConfig("pikascrape/src/main/dasource.properties");
 
-        System.out.println("Chose the option (1/2/3)");
-        System.out.println("1)Launch as a guest (You can't use bookmarks)");
-        System.out.println("2)Login");
-        System.out.println("3)Register");
-        Scanner input = new Scanner(System.in);
-        stateOfaccessToPikaScrape = input.nextInt();
+        try {
+            currentDatasource = new HikariDataSource(config);
+        } catch (Exception e) {
+            throw new RuntimeException("Error initializing the datasource", e);
+        }
+    }
 
-        while (true){
+    public static void accessToPikaScrape() throws SQLException {
+        System.out.println("Choose the option (1/2/3)");
+        System.out.println("1) Launch as a guest (You can't use bookmarks)");
+        System.out.println("2) Login");
+        System.out.println("3) Register");
+        Scanner inputAccess = new Scanner(System.in);
+        stateOfaccessToPikaScrape = inputAccess.nextInt();
+        System.out.println(stateOfaccessToPikaScrape);
 
-            if (stateOfaccessToPikaScrape == 1){
+        switch (stateOfaccessToPikaScrape) {
+            case 1:
                 System.out.println("Launching as guest");
                 Main.scrapeACard();
-                input.nextLine();
+                break;
+            case 2:
+                System.out.println("Log into your account");
+                Main.scrapeACard();
+                break;
+            case 3:
+                System.out.println("Create an account");
+                accountCreate();
+                break;
+            default:
+                System.out.println("Invalid option. Please choose 1, 2, or 3.");
+                break;
+        }
+    }
 
-                if (stateOfaccessToPikaScrape == 2){
-                    System.out.println("Log into your account");
-                    Main.scrapeACard();
-                    input.nextLine();
+    public static void accountCreate() throws SQLException {
+        System.out.println("Input your account username");
+        Scanner inputAccountCreate = new Scanner(System.in);
+        username = inputAccountCreate.nextLine();
+        System.out.println("Input your account email address");
+        email = inputAccountCreate.nextLine();
+        System.out.println("Input the Telegram ID you want to link to the current account");
+        telegramId = inputAccountCreate.nextLine();
+        System.out.println("Input your account password. Please choose a strong one");
+        password = inputAccountCreate.nextLine();
 
-                    if (stateOfaccessToPikaScrape == 3){
-                        System.out.println("Create an account");
-                        Main.scrapeACard();
-                        input.nextLine();
-
-                    }
-                }
+        if (currentDatasource != null) {
+            try (Connection conn = currentDatasource.getConnection()) {
+                DAO dao = new DAO(conn);
+                user_id = dao.insertCreateAccount(username, email, telegramId, password);
+            } catch (SQLException e) {
+                e.printStackTrace(); // or use logger.error() if logging is set up
             }
+        } else {
+            System.out.println("Data source not initialized.");
         }
     }
 }

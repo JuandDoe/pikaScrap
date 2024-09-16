@@ -1,9 +1,6 @@
 package ape.fr;
 
 import com.microsoft.playwright.*;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 import static ape.fr.Filters.*;
@@ -12,11 +9,10 @@ public class Main {
 
     public static String fullCustomLink;
 
-    public static void main(String[] args) {
-        Datasources.test();
+    public static void main(String[] args) throws SQLException {
         putInFiltersHTables();
+        accountManager.test();
         accountManager.accessToPikaScrape();
-
     }
 
     public static void scrapeACard() {

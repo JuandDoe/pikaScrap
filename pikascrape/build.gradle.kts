@@ -21,6 +21,10 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.1.0")
 
     implementation("org.postgresql:postgresql:42.7.4") // Adjust the version as needed
+
+    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    implementation("ch.qos.logback:logback-classic:1.5.8")
+
 }
 
 tasks.test {
