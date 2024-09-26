@@ -201,4 +201,7 @@ public class Filters {
     }
     }
 
-
+// Newsletters
+// web assembly
+//faker (données de démo)
+// https://github.com/luttje/css-pokemon-gameboy/    pokemon style

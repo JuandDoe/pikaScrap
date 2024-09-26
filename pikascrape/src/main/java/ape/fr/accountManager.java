@@ -18,7 +18,11 @@ public class accountManager {
 
     static int stateOfaccessToPikaScrape;
 
-    public static void test() {
+    public static String loginTry;
+    public static String passwordTry;
+    public static boolean emailIsCorrect;
+    public static boolean passwordIsCorrect;
+    public static void testDbConnexion() {
         HikariConfig config = new HikariConfig("pikascrape/src/main/dasource.properties");
 
         try {
@@ -28,7 +32,7 @@ public class accountManager {
         }
     }
 
-    public static void accessToPikaScrape() throws SQLException {
+    public static void accessToPikaScrape() {
         System.out.println("Choose the option (1/2/3)");
         System.out.println("1) Launch as a guest (You can't use bookmarks)");
         System.out.println("2) Login");
@@ -43,7 +47,8 @@ public class accountManager {
                 Main.scrapeACard();
                 break;
             case 2:
-                System.out.println("Log into your account");
+                checkEmailToLoLogIn();
+                checkPasswordToLoLogIn();
                 Main.scrapeACard();
                 break;
             case 3:
@@ -56,7 +61,7 @@ public class accountManager {
         }
     }
 
-    public static void accountCreate() throws SQLException {
+    public static void accountCreate() {
         System.out.println("Input your account username");
         Scanner inputAccountCreate = new Scanner(System.in);
         username = inputAccountCreate.nextLine();
@@ -69,13 +74,58 @@ public class accountManager {
 
         if (currentDatasource != null) {
             try (Connection conn = currentDatasource.getConnection()) {
-                DAO dao = new DAO(conn);
-                user_id = dao.insertCreateAccount(username, email, telegramId, password);
+                DAO instance = new DAO(conn);
+                user_id = instance.insertCreateAccount(username, email, telegramId, password);
             } catch (SQLException e) {
-                e.printStackTrace(); // or use logger.error() if logging is set up
+                e.printStackTrace();
             }
         } else {
             System.out.println("Data source not initialized.");
         }
     }
-}
+
+    public static void checkEmailToLoLogIn() {
+        while (!emailIsCorrect) {
+            System.out.println("Welcome to Pikascrape, please log in into your account");
+            System.out.println("input your email address");
+            Scanner inputAccess = new Scanner(System.in);
+            loginTry = inputAccess.nextLine();
+
+            if (currentDatasource != null) {
+                try (Connection conn = currentDatasource.getConnection()) {
+                    DAO instance = new DAO(conn);
+                    instance.checkLogin(loginTry);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                System.out.println("Data source not initialized.");
+            }
+        }
+
+    }
+
+    public static void checkPasswordToLoLogIn() {
+        while (!passwordIsCorrect) {
+            System.out.println("input your password");
+            Scanner inputAccess = new Scanner(System.in);
+            passwordTry = inputAccess.nextLine();
+
+            if (currentDatasource != null) {
+                try (Connection conn = currentDatasource.getConnection()) {
+                    DAO instance = new DAO(conn);
+                    instance.checkPassword(passwordTry);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                System.out.println("Data source not initialized.");
+            }
+        }
+
+    }
+
+
+    }
