@@ -20,8 +20,8 @@ import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jakarta.servlet.http.HttpServlet;
 
-import javax.naming.ConfigurationException;
 
 public class Main {
 
@@ -44,11 +44,10 @@ public class Main {
                 ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
                 context.setContextPath("/");
 
-                context.addServlet(ConnexionServlet.class, "/connexion");
-                context.addServlet(NewBookmarkServlet.class, "/newbookmark");
-                context.addServlet(ScrapeServlet.class, "/scrape");
-                context.addServlet(SignUpServlet.class, "/signup");
-
+                context.addServlet(String.valueOf(ConnexionServlet.class), "/connexion");
+                context.addServlet(String.valueOf(NewBookmarkServlet.class), "/existingtranscription/*");
+                context.addServlet(String.valueOf(ScrapeServlet.class), "/newtranscription");
+                context.addServlet(String.valueOf(SignUpServlet.class), "/waitedtranscription");
 
                 server.setHandler(context);
 
