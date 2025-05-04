@@ -57,7 +57,6 @@ public class ConnexionServlet extends HttpServlet {
         // Traiter les données de l'utilisateur
         System.out.println("Received user: " + user.getName() + ", password: " + user.getPassword());
 
-        // Répondre au client (tu peux aussi renvoyer un JSON)
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write("{\"message\":\"User received successfully\"}");

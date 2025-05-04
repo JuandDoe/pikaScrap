@@ -2,11 +2,12 @@ package ape.fr;
 
 import ape.fr.Servlets.ConnexionServlet;
 import ape.fr.Servlets.NewBookmarkServlet;
-import ape.fr.Servlets.ScrapeServlet;
+import ape.fr.Servlets.ScrapeFiltersServlet;;
 import ape.fr.Servlets.SignUpServlet;
 import ape.fr.utils.Out;
 import com.microsoft.playwright.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import static ape.fr.Filters.*;
@@ -46,7 +47,7 @@ public class Main {
 
                 context.addServlet(ConnexionServlet.class, "/connexion");
                 context.addServlet(NewBookmarkServlet.class, "/newbookmark");
-                context.addServlet(ScrapeServlet.class, "/scrape");
+                context.addServlet(ScrapeFiltersServlet.class, "/scrape");
                 context.addServlet(SignUpServlet.class, "/signup");
 
 
@@ -86,7 +87,7 @@ public class Main {
 
             Browser browser = playwright.firefox().launch();
             Scanner input = new Scanner(System.in);
-            System.out.println("Go to https://www.cardmarket.com/en/Pokemon/Products/Singles and chose a card chose a card\n " +
+            logger.info("Go to https://www.cardmarket.com/en/Pokemon/Products/Singles and chose a card chose a card\n " +
                     "imput everything after \"Singles\" in the url of the card you want to scrape\n " +
                     "Example : for 'https://www.cardmarket.com/en/Pokemon/Products/Singles/151/Venusaur-ex-V1-MEW003' => '/151/Venusaur-ex-V1-MEW003'\n");
 
@@ -141,9 +142,9 @@ public class Main {
 
             if (targetElement != null) {
                 targetElement.click();
-                System.out.println("Clicked on the element with 'id' containing 'articleRow' and a random number: " + targetElement.getAttribute("id"));
+                logger.info("Clicked on the element with 'id' containing 'articleRow' and a random number: " + targetElement.getAttribute("id"));
             } else {
-                System.out.println("No elements with 'id' containing 'articleRow' and a random number found.");
+                logger.info("No elements with 'id' containing 'articleRow' and a random number found.");
             }
 
             String cardId = targetElement.getAttribute("id");
@@ -155,8 +156,12 @@ public class Main {
 
             // display the price found into the scraped selector
             String priceCard = page.locator(fullId).innerText();
-            System.out.println(fullCustomLink);
-            System.out.println("Lowest card price on cardmarket.com is " + priceCard);
+            logger.info(fullCustomLink);
+            logger.info("Lowest card price on cardmarket.com is " + priceCard);
         }
     }
+
 }
+
+//https://www.cardmarket.com/fr/Pokemon/Products/Singles/Prismatic-Evolutions/Budew-PRE004?sellerCountry=11,10&sellerType=1,2,3,4&language=7,2&minCondition=5,4
+//https://www.cardmarket.com/fr/Pokemon/Products/Singles/Prismatic-Evolutions/Budew-PRE004?sellerCountry=11,12&sellerType=0,1,2&language=2&minCondition=5

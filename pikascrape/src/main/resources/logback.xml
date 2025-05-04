@@ -1,0 +1,18 @@
+<configuration>
+    <!-- Désactive les logs DEBUG pour Jetty -->
+    <logger name="org.eclipse.jetty" level="INFO"/>
+    <logger name="org.eclipse.jetty.util.log" level="INFO"/>
+    <logger name="org.eclipse.jetty.server" level="INFO"/>
+
+    <!-- Définit un appender pour afficher les logs dans la console -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Niveau de log global (INFO et au-dessus) -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
